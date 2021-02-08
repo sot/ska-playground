@@ -1,25 +1,28 @@
 import pytest
 
 from play.jamesk import knockknock
+from contextlib import redirect_stdout
+import io
+import re
 
 def test_knockknock():
-    import sys
-    import io
-    import re
-
     # redirect stdout to a string stream
     stream = io.StringIO()
-    sys.stdout = stream
-    # exercise the function
-    knockknock()
-    # restore the stdout
-    sys.stdout = sys.__stdout__
+    with redirect_stdout(stream):
+        # exercise the function
+        knockknock()
     # evaluate the results
     full_joke = stream.getvalue()
     stream.close()
-    pattern = re.compile(r"Knock Knock...\n\t\tWho's there\?\n([^\n]+)\n\t\t([\w]+) who\?\n([^\n]+)\n")
+
+    pattern = re.compile(r"Knock Knock...\r?\n\t\tWho's there\?\r?\n([^\r\n]+)\r?\n\t\t([\w]+) who\?\r?\n([^\r\n]+)\r?\n")
     match = pattern.search(full_joke)
+    # 3 groups are expected
     assert len(match.groups()) == 3
-    assert match.group(1) == match.group(2)
-    assert match.group(1) in knockknock.jokes
-    assert match.group(3) == knockknock.jokes[match.group(1)]
+    whos_there = match.group(1)
+    # the first two are the same
+    assert whos_there == match.group(2)
+    # the first one should be a key in the jokes dict
+    assert whos_there in knockknock.jokes
+    # the third should be the matching value
+    assert match.group(3) == knockknock.jokes[whos_there]
