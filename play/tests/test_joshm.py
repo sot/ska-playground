@@ -4,7 +4,7 @@ from play.joshm import has_joshm
 
 
 def test_has_joshm():
-    assert has_toma('Ex')
+    assert has_joshm('Ex')
 
 
 
