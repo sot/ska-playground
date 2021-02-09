@@ -1,6 +1,7 @@
 import pytest
 
 from play.jamesk import knockknock
+from play.jamesk import text2morse
 from contextlib import redirect_stdout
 import io
 import re
@@ -26,3 +27,14 @@ def test_knockknock():
     assert whos_there in knockknock.jokes
     # the third should be the matching value
     assert match.group(3) == knockknock.jokes[whos_there]
+
+
+def test_text2morse_default():
+    # test default text2morse behavior
+
+    expected_str = '.... . .-.. .-.. ---        .-- --- .-. .-.. -..'
+    # exercise the code
+    actual_str = text2morse()
+    # check the results
+    assert actual_str == expected_str
+
