@@ -3,7 +3,7 @@ def knockknock():
     import random
 
     knockknock.jokes = {
-    'Tank': "You're Welcome.",
+    'Tank': "You're Welcome... not",
     'Owls': "You're right, Owls 'who'",
     'Cow says': "No, a cow says 'moo'!",
     'Woo': "Wow, someone's excited about knock knock jokes",
