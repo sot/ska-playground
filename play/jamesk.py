@@ -65,6 +65,12 @@ class MorseTree:
 
 
     def find_char(self, char, this_node=None, morse_str = ""):
+
+        # "*" is used in place of invalid characters, so we cannot match it correctly
+        if(char == "*"):
+            raise ValueError("'*' cannot be converted to morse code.")
+            return None
+
         # depth first search
         if(not this_node):
             this_node = self.root

@@ -38,3 +38,18 @@ def test_text2morse_default():
     # check the results
     assert actual_str == expected_str
 
+
+def test_text2morse():
+    # test text2morse
+
+    expected_str = '.... .- .--. .--. -.--        -.. .- -.--'
+    # exercise the code
+    actual_str = text2morse("Happy Day")
+    # check the results
+    assert actual_str == expected_str
+
+
+def test_text2morse_astrik():
+    # test that an astrik returns the appropriate error
+    with pytest.raises(ValueError, match="'*' cannot be converted to morse code."):
+        text2morse("All *.py")
