@@ -6,6 +6,7 @@ from contextlib import redirect_stdout
 import io
 import re
 
+
 def test_knockknock():
     # redirect stdout to a string stream
     stream = io.StringIO()
@@ -16,7 +17,12 @@ def test_knockknock():
     full_joke = stream.getvalue()
     stream.close()
 
-    pattern = re.compile(r"Knock Knock...\r?\n\t\tWho's there\?\r?\n([^\r\n]+)\r?\n\t\t([\w]+) who\?\r?\n([^\r\n]+)\r?\n")
+    pattern = re.compile(
+        r"""Knock\sKnock...\r?\n
+        \t\tWho's\sthere\?\r?\n
+        ([^\r\n]+)\r?\n
+        \t\t(\w+)\swho\?\r?\n
+        ([^\r\n]+)\r?\n""", re.VERBOSE)
     match = pattern.search(full_joke)
     # 3 groups are expected
     assert len(match.groups()) == 3
@@ -51,5 +57,6 @@ def test_text2morse():
 
 def test_text2morse_astrik():
     # test that an astrik returns the appropriate error
-    with pytest.raises(ValueError, match="'*' cannot be converted to morse code."):
+    with pytest.raises(ValueError,
+                       match="'*' cannot be converted to morse code."):
         text2morse("All *.py")
